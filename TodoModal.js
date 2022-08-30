@@ -1,11 +1,34 @@
 import React, { useState } from 'react';
+import toast from 'react-hot-toast';
 import { MdOutlineClose } from 'react-icons/md';
+import { useDispatch } from 'react-redux';
+import { v4 as uuid } from 'uuid';
+import { addTodo } from '../slices/todoSlice';
 import styles from '../styles/modules/modal.module.scss';
 import Button from './Button';
 
 function TodoModal({ modalOpen, setModalOpen }) {
   const [title, setTitle] = useState('');
-  const [status, setStatus] = useState('');
+  const [status, setStatus] = useState('incomplete');
+  const dispatch = useDispatch();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (title && status) {
+      dispatch(
+        addTodo({
+          id: uuid(),
+          title,
+          status,
+          time: new Date().toLocaleDateString(),
+        })
+      );
+      toast.success('Task Added Successfully');
+    } else {
+      toast.error('Title should not be empty!');
+    }
+  };
+
   return (
     modalOpen && (
       <div className={styles.wrapper}>
@@ -19,7 +42,7 @@ function TodoModal({ modalOpen, setModalOpen }) {
           >
             <MdOutlineClose />
           </div>
-          <form className={styles.form}>
+          <form className={styles.form} onSubmit={(e) => handleSubmit(e)}>
             <h1 className={styles.formtitle}> ADD TASK</h1>
             <label htmlFor="title">
               Title
@@ -32,7 +55,12 @@ function TodoModal({ modalOpen, setModalOpen }) {
             </label>
             <label htmlFor="status">
               Status
-              <select name="status" id="status">
+              <select
+                name="status"
+                id="status"
+                value={status}
+                onChange={(e) => setStatus(e.target.value)}
+              >
                 <option value="incomplete">Incomplete</option>
                 <option value="complete">Complete</option>
               </select>
