@@ -10,7 +10,7 @@ function AppContent() {
   return (
     <div>
       {sortedTodoList && sortedTodoList.length > 0
-        ? sortedTodoList.map((todo) => <TodoItem todo={todo} />)
+        ? sortedTodoList.map((todo) => <TodoItem key={todo.id} todo={todo} />)
         : 'no todo found'}
     </div>
   );
