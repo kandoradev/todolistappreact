@@ -15,7 +15,7 @@ function AppHeader() {
         <option value="incomplete">Incomplete</option>
         <option value="complete">Complete</option>
       </SelectButton>
-      <TodoModal modalOpen={modalOpen} setModalOpen={setModalOpen} />
+      <TodoModal TYPE="Add" modalOpen={modalOpen} setModalOpen={setModalOpen} />
     </div>
   );
 }

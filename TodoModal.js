@@ -7,7 +7,7 @@ import { addTodo } from '../slices/todoSlice';
 import styles from '../styles/modules/modal.module.scss';
 import Button from './Button';
 
-function TodoModal({ modalOpen, setModalOpen }) {
+function TodoModal({ type, modalOpen, setModalOpen }) {
   const [title, setTitle] = useState('');
   const [status, setStatus] = useState('incomplete');
   const dispatch = useDispatch();
@@ -43,7 +43,10 @@ function TodoModal({ modalOpen, setModalOpen }) {
             <MdOutlineClose />
           </div>
           <form className={styles.form} onSubmit={(e) => handleSubmit(e)}>
-            <h1 className={styles.formtitle}> ADD TASK</h1>
+            <h1 className={styles.formtitle}>
+              {' '}
+              {type === 'update' ? 'UPDATE' : 'Add'} Task!
+            </h1>
             <label htmlFor="title">
               Title
               <input
@@ -67,7 +70,7 @@ function TodoModal({ modalOpen, setModalOpen }) {
             </label>
             <div className={styles.buttonContainer}>
               <Button type="submit" variant="primary">
-                Add Task
+                {type === 'update' ? 'UPDATE' : 'Add'} Task!
               </Button>
               <Button
                 type="button"
